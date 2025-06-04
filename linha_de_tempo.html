@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linha do Tempo - Literatura Feminina Portuguesa</title>
+    <style>
+        body {
+            font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f0e6f6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a0a1a;
+            background-image: linear-gradient(to bottom, #2a0a2a 0%, #1a0a1a 100%);
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            padding: 15px 0;
+            background-color: rgba(139, 46, 64, 0.2);
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(139, 46, 64, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(to right, #8b2e40, #d84a6a);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(219, 46, 100, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            min-width: 150px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .nav-btn:hover {
+            background: linear-gradient(to right, #d84a6a, #8b2e40);
+            box-shadow: 0 0 25px rgba(219, 46, 100, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(to right, #d84a6a, #8b2e40);
+            box-shadow: 0 0 10px 2px rgba(219, 46, 100, 0.7), 0 0 30px #8b2e40;
+            transform: translateY(-2px);
+        }
+
+        
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+        
+        h2 {
+            text-align: center;
+            color: #ff4d8d;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 77, 141, 0.5);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #ff4d8d, transparent);
+            box-shadow: 0 0 10px #ff4d8d;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #ff4d8d, #ff1a75);
+            box-shadow: 0 0 10px rgba(255, 77, 141, 0.7);
+            border-radius: 2px;
+        }
+        
+        .timeline-period {
+            position: relative;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin: 40px 0 25px;
+            padding-left: 40px;
+            color: #ff4d8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 77, 141, 0.5);
+        }
+        
+        .timeline-period::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #ff1a75;
+            border: 4px solid #1a0a1a;
+            box-shadow: 0 0 0 2px #ff4d8d, 0 0 15px #ff1a75;
+            z-index: 1;
+        }
+        
+        .timeline-event {
+            position: relative;
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: rgba(40, 10, 30, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid #ff4d8d;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 77, 141, 0.2);
+        }
+        
+        .timeline-event:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 10px 25px rgba(255, 77, 141, 0.3);
+            border-left: 4px solid #ff1a75;
+            background-color: rgba(60, 15, 45, 0.7);
+        }
+        
+        .timeline-event::before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 28px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #ff1a75;
+            border: 3px solid #1a0a1a;
+            box-shadow: 0 0 0 2px #ff4d8d, 0 0 10px #ff1a75;
+            z-index: 1;
+        }
+        
+        .timeline-event strong {
+            color: #ff8db3;
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .timeline-event em {
+            font-style: italic;
+            color: #ff6699;
+        }
+        
+        .ver-mais-btn {
+            background: linear-gradient(to right, #ff1a75, #ff4d8d);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(255, 77, 141, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ver-mais-btn:hover {
+            background: linear-gradient(to right, #ff4d8d, #ff1a75);
+            box-shadow: 0 5px 20px rgba(255, 77, 141, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .ver-mais-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 55%
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+        
+        .ver-mais-btn:hover::after {
+            left: 100%;
+        }
+        
+        .ver-mais-text, .timeline-info {
+            display: none;
+            padding: 20px;
+            background-color: rgba(50, 15, 35, 0.8);
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 3px solid #ff4d8d;
+            animation: fadeIn 0.5s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ver-mais-text p, .timeline-info p {
+            margin-bottom: 15px;
+        }
+        
+        .ver-mais-text strong, .timeline-info strong {
+            color: #ff8db3;
+        }
+        
+        .ver-mais-text img, .timeline-info img {
+            margin: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 77, 141, 0.3);
+        }
+        
+        .ver-mais-text img:hover, .timeline-info img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 77, 141, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .timeline {
+                padding-left: 30px;
+            }
+            
+            .timeline::before {
+                left: 10px;
+            }
+            
+            .timeline-period {
+                padding-left: 30px;
+                font-size: 1.3em;
+            }
+            
+            .timeline-period::before {
+                left: 0;
+            }
+            
+            .timeline-event::before {
+                left: -28px;
+            }
+            
+            .ver-mais-text img, .timeline-info img {
+                width: 100% !important;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>    
+<body>
+    <!-- Barra de navegação simplificada -->
+    <nav class="navbar">        
+        <button class="nav-btn active" onclick="window.location.href='index.html'">home</button>
+    </nav>
+    <section id="linha-do-tempo">
+        <h2>Linha do Tempo da Literatura Feminina Portuguesa</h2>
+        <div class="timeline">
+            <div class="timeline-period">🏰 Século XVII</div>
+            <div class="timeline-event">
+                <strong>1646 → Primeira poeta portuguesa a publicar uma obra com grande reconhecimento</strong> Publicação de <em>Rimas Várias</em>, de Soror Violante do Céu - um feito que se destacou num contexto em que a voz feminina na literatura era frequentemente ignorada
+                <div>
+                    <button class="ver-mais-btn">Ver Mais</button>
+                    <div class="ver-mais-text">
+                        <p><strong>Quem foi Soror Violante do Céu?</strong> Nascida em Lisboa, a 30 de maio de 1601 ou 1607, foi uma religiosa e escritora barroca portuguesa. Uma das primeiras mulheres a conquistar grande prestígio literário em Portugal e no mundo lusófono.</p>
+                        <p><strong>Sobre a obra <em>Rimas Várias</em>:</strong> Esta obra, publicada pela primeira vez em 1646, reúne poesia sacra e profana. Escrita em estilo barroco, a obra é marcada por grande erudição, misticismo e domínio retórico. Aborda temas religiosos, amorosos e filosóficos — um feito notável para uma mulher no século XVII.</p>
+                        <p><strong>Importância e impacto:</strong> Uma das primeiras obras de autoria feminina publicadas em vida da autora em Portugal, que causou grande admiração nos meios intelectuais — o que era raro para uma autora mulher. Foi reeditada várias vezes, sinal da sua aceitação e valorização cultural.</p>
+                        <p>Soror Violante foi comparada a escritores como Luís de Camões, o que demonstra o seu reconhecimento da época, e é frequentemente considerada precursora da voz feminina na literatura portuguesa.</p>
+                        <img src="https://www.nossapoesia.com/media/images/soror-violante-do-ceu_e10jBSf.jpg" alt="Retrato de Soror Violante do Céu" style="width: 20%; border-radius: 5px;">
+                        <img src="https://catalogo.cm-ferreiradozezere.pt/cgi-bin/koha/opac-image.pl?thumbnail=1&imagenumber=6379" alt="Capa de Rimas Várias" style="width: 20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-period">📖 Século XIX</div>
+            <div class="timeline-event">
+                <strong>1867 → Uma das primeiras mulheres a publicar romance em Portugal</strong> Publicação da obra <em>Herança de Lágrimas</em>, de Ana Plácido
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem foi Ana Plácido?</strong> Nascida em 1831, Ana Plácido foi uma escritora portuguesa que se destacou como uma das pioneiras do romance em Portugal, num tempo em que poucas mulheres tinham espaço no meio literário. Além da sua carreira literária, teve uma vida marcada por experiências pessoais intensas, que influenciaram as suas obras.</p>
+                        <p><strong>Sobre a obra <em>Herança de Lágrimas</em>:</strong> Esta obra, publicada em 1867, é um romance que aborda temas como: sofrimento, relações familiares e dilemas sociais da época. A obra destaca-se pela forma como a autora explora as emoções femininas e as dificuldades enfrentadas pelas mulheres na sociedade patriarcal do século XIX.</p>
+                        <p><strong>Importância e impacto:</strong> A obra é considerado um marco importante na literatura portuguesa por ser uma das primeiras obras de autoras femininas a ganhar reconhecimento. Ana Plácido abriu caminho para outras mulheres escritoras e contribuiu para a visibilidade da voz feminina na narrativa literária portuguesa.</p>
+                        <img src="https://www.sibila.pt/images/biografias/ana_placido_bxa.jpg" alt="Retrato de Ana Plácido" style="width: 20%; border-radius: 5px;">
+                        <img src="https://img.wook.pt/images/heranca-de-lagrimas-ana-placido/MXwyMzA5OTE3MnwxOTAxNDE0OXwxNTU4NDQ5MzQwMDAw/500x" alt="Capa da obra Herança de Lágrimas" style="width:20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event">
+                <strong>1870–1880 → Primeira publicação periódica feminina dedicada à educação e emancipação da mulher</strong> <em>Almanach das Senhoras</em> dirigido por Guiomar Torresão
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem foi Guiomar Torresão?</strong> Nascida em 1827, Guiomar Torresão foi uma escritora, jornalista e feminista portuguesa que se destacou pelo seu empenho na defesa dos direitos das mulheres e na promoção da sua educação. Foi ua voz pioneira na luta pela emancipação feminina em Portugal.</p>
+                        <p><strong>Sobre o <em>Almanach das Senhoras</em>:</strong> Uma publicação periódica, dirigida durante a década de 1870 por Guiomar Torresão, que se tornou referência para o público feminino. Tinha como principais objetivos a divulgação de conteúdos educativos, literários e culturais, incentivando à reflexão sobre o papel da mulher na sociedade e promovendo o debate em torno da sua emancipação.</p>
+                        <p><strong>Importância e impacto:</strong> Esta foi a primeira publicação periódica em Portugal orientada especialmente para as mulheres, contribuindo para o acesso ao conhecimento e o despertar do pensamento crítico feminino. Guiomar Torresão consolidou-se como um das primeiras feministas portuguesas e a sua obra influenciou gerações de mulheres que luteram por maior igualdade e direitos.</p>
+                        <img src="https://debategraph.org/Handler.ashx?path=ROOT%252fu14121%252fGuiomar+Torreza%25cc%2583o.png" alt="Retrato de Guiomar Torresão" style="width: 20%; border-radius: 5px;">
+                        <img src="https://www.ub.edu/genvipref/sites/default/files/styles/revista_/public/portadas-revistas/Almanach%20das%20Senhoras.jpg?itok=BgpTnEIl" alt="Capa duma publicação periódica Almanach das Senhoras" style="width:20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event">
+                <strong>1880 → Primeira escritora ouvida oficialmente sobre a educação das mulheres</strong> Maria Amália Vaz de Carvalho integra a "Comissão para a Educação Feminina"
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem foi Maria Amália Vaz de Carvalho?</strong> Nascida em 1847, Maria Amália Vaz de Carvalho foi uma escritora, pedagoga e jornalista portuguesa, reconhecida pela sua luta em prol da educaão feminina e pelos seus textos que defendem os direito das mulheres. Foi uma das vozes mais influentes do século XIX no debate sobre a instrução e emancipação da mulher em Portugal.</p>
+                        <p><strong>Sobre a "Comissão para a Educação Feminina":</strong> Em 1880, Maria Amália foi convidada para integrar esta comissão governamental, marcado a primeira vez que uma escritora participou oficialmente na elaboração de políticas sobre a educação das mulheres. Esta comissão tinha como objetivo analisar e propor melhorias no ensino feminino, um passo crucial para o avanço das oportunidades educativas para as mulheres portuguesas.</p>
+                        <p><strong>Importância e impacto:</strong> A participação da autora na comissão simboliza o reconhecimento oficial do papel das mulheres intelectuais na sociedade portuguesa. O seu trabalho contribuiu para abrir caminho para uma maior valorização da educação feminina, inlfuenciando reformas e mudanças que beneficiaram gerações futuras.</p>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Maria_Am%C3%A1lia_Vaz_de_Carvalho.jpg" alt="Retrato de Maria Amália Vaz de Carvalho" style="max-width: 20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-period">🌹 Início do Século XX</div>
+            <div class="timeline-event">
+                <strong>1919 → Marco na poesia feminina com uma das vozes mais marcantes da poesia portuguesa feminina</strong> Florbela Espanca publica <em>Livro de Mágoas</em>
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem foi Florbela Espanca?</strong> Nascida em 1894, Florbela Espanca foi uma poetisa portuguesa, cuja obra se destaca pela intensidade emocional. É considerada uma das maiores vozes femininas da literatura portuguesa, com uma poesia que explora o amor, a dor, a solidão e a procura pela identidade.</p>
+                        <p><strong>Sobre a obra <em>Livro de Mágoas</em>:</strong> Publicada em 1919, a obra reúne poemas marcados por uma linguagem sensível e apaixonada, onde a autora explora sentimentos como o sofrimento amoroso, a melancolia e angústia existencial. <em>Livro de Mágoas</em> é um marco no desenvolvimento da poesia feminina em Portugal.</p>
+                        <p><strong>Importância e impacto:</strong> Esta obra foi fundamental para afirmar a presença da mulher na poesia portuguesa, trazendo à luz temas íntimos e universais através de uma linguagem inovadora, para a época, e expressiva. Florbela Espanca influenciou gerações de poetas e continua a ser uma referência obrigatória na literatura lusófona.</p>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Picture_of_Florbela_Espanca.jpg" alt="Retrato de Florbela Espanca" style="max-width: 20%; border-radius: 5px;">
+                        <img src="https://img.bertrand.pt/images/livro-de-magoas-florbela-espanca/NDV8MTI5MTc5ODZ8ODQ5MDkwM3wxMzgzNTgxNzgxMDAw/500x" alt="Edição da obra Livro de Mágoas" style="max-width: 20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event">
+                <strong>1925 → Primeira mulher a escrever crónicas sob pseudónimos masculinos</strong> Irene Lisboa estreia-se no jornalismo literário com crónicas assinadas com nomes masculinos, rompendo barreiras na crítica literária
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem foi Irene Lisboa?</strong> Nascida em 1892, Irene Lisboa foi uma escritora, pedagoga e cronista portuguesa. Conhecida pela sua sensibilidade, modernidade e estilo intimista, destacou-se tanto na prosa literária como na crónica jornalística. Para poder publicar e ser lidar num meio predominantemente masculino, usou pseudónimos como <em>Manuel Soares</em> e <em>João Falco</em>.</p>
+                        <p><strong>Sobre a sua entrada no jornalismo literário:</strong> Em 1925, Irene Lisboa começou a publicar crónicas e textos de crítica sob nomes masculinos, numa época em que a mulher tinha pouca, ou nenhuma, presença neste tipo de escrita. O uso de pseudónimos foi uma estratégia para contornar os preconceitos de género e permitir que a sua voz crítica fosse ouvida e respeitada.</p>
+                        <p><strong>Importância e impacto:</strong> A presença de Irene Lisboa na crítica literária marcou um momento decisivo para a afirmação das mulheres no jornalismo cultural em Portugal. Com uma escrita elegante, lúcida e profundamente pessoal, abriu caminhos para futuras gerações de mulheres cronistas e jornalistas.</p>
+                        <img src="https://api.oestecim.pt/uploads/1/1/HistoricoProjetos/ArrudaIreneLisboa2.jpg?ExwZesikipOZCR3eISlINpZhnwrLvHocW-jhuKEQ5cfECYYvjQA9MuaYSHC4K8zu" alt="Retrato de Irene Lisboa" style="max-width: 20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-period">✊ Década de 1970</div>
+            <div class="timeline-event">
+                <strong>1972 → Publicação de uma obra revolucionária que desafiou a censura e o regime</strong> Publicação de <em>Novas Cartas Portuguesas</em> pelas "Três Marias" — Maria Isabel Barreno, Maria Teresa Horta e Maria Velho da Costa.
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem foram as "Três Marias"?</strong>Maria Isabel Barreno, Maria Teresa Horta e Maria Velho da Costa foram escritoras, feministas e intelectuais portuguesas que marcaram profundamente a literatura e a luta pelos direitos das mulheres durante o regime do Estado Novo. Uniram-se num gesto coletivo de denúncia e libertação através da escrita.</p>
+                        <p><strong>Sobre a obra <em>Novas Cartas Portuguesas</em>:</strong> Inspirada nas <em>Cartas Portuguesas</em>, de Mariana Alcoforado, esta obra de 1972 mistura prosa, poesia, cartas e ensaio num grito contra o machismo, o colonialismo e a repressão sexual. A linguagem ousada e a crítica social foram consideradas provocatórias pelo regime, levando à censura imediata do livro.</p>
+                        <p><strong>Importância e impacto:</strong> A publicação levou as autoras a tribunal sob acusações de atentado à moral pública. O julgamento causou indignação internacional e gerou uma onda de solidariedade feminista em vários países. <em>Novas Cartas Portuguesas</em> tornou-se um símbolo da resistência contra a opressão e da afirmação do direito das mulheres à liberdade de expressão e criação literária. É hoje uma obra incontornável do feminismo português e mundial.</p>
+                        <img src="https://comunidadeculturaearte.com/wp-content/uploads/2021/06/Tre%CC%82s-Marias1.jpg" alt="Autoras da obra As Três Marias" style="max-width: 20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-period">🇵🇹 Pós-25 de Abril (1974)</div>
+            <div class="timeline-event">
+                <strong>1975–1980 → Explosão de publicações literárias de autoras mulheres</strong> Após o 25 de Abril, cresce significativamente o número de obras publicadas por autoras e surgem editoras com enfoque feminista
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>O contexto histórico e cultural:</strong> Com a queda da ditadura do Estado Novo em 1974, Portugal vive um período de liberdade e renovação cultural. A Revolução dos Cravos não só trouxe democracia, como abriu espaço para vozes até então silenciadas — entre elas, as das mulheres escritoras.</p>
+                        <p><strong>Sobre o fenómeno editorial:</strong> Entre 1975 e 1980, regista-se um crescimento notável na publicação de obras literárias escritas por mulheres. Surgem também editoras independentes com orientação feminista, empenhadas em dar visibilidade às questões de género, à condição feminina e às novas subjetividades das mulheres na sociedade pós-revolucionária.</p>
+                        <p><strong>Importância e impacto:</strong> Este período marca uma viragem na literatura portuguesa contemporânea: as mulheres ganham maior protagonismo como autoras, críticas e editoras. Os temas abordados passam a incluir direitos das mulheres, sexualidade, maternidade, política e identidade. Este florescimento literário contribuiu para consolidar uma literatura no feminino, plural, crítica e transformadora.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event">
+                <strong>1999 → Primeira mulher a receber o Prémio Camões</strong> Sophia de Mello Breyner recebe o prémio com maior distinção da literatura em língua portuguesa.
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem foi Sophia de Mello Breyner Andersen?</strong> Nascida em 1919, Sophia foi uma das mais importantes poetisas portuguesas do século XX. A sua obra distingue-se pela ligação à natureza, à ética e aos valores humanos, combinando simplicidade e rigor formal. Além da poesia, destacou-se também na prosa e na escrita para crianças.</p>
+                        <p><strong>Sobre o Prémio Camões:</strong> Criado em 1989, o Prémio Camões é a mais alta distinção literária para autores de língua portuguesa. Em 1999, Sophia tornou-se a primeira mulher a receber este reconhecimento, sublinhando a importância e a qualidade da sua obra no panorama lusófono.</p>
+                        <p><strong>Importância e impacto:</strong>Este prémio não só homenageou uma carreira brilhante, como também abriu espaço para maior visibilidade das mulheres na literatura portuguesa. Sophia de Mello Breyner Andersen é hoje uma referência incontornável e uma inspiração para gerações de escritores.</p>
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Sophia_de_Mello_Breyner_Andresen.jpg/250px-Sophia_de_Mello_Breyner_Andresen.jpg" alt="Retrato de Sophia de Mello Breyner" style="max-width: 20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-period">🟣 Século XXI</div>
+            <div class="timeline-event">
+                <strong>2000s → Expansão dos estudos de género e feminismo literário em universidades portuguesas</strong> Autoras como Natália Correia, Maria Velho da Costa e Hélia Correia passam a integrar os currículos académicos como referências centrais
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>O contexto académico cultural:</strong> Com o novo milénio, os estudos literários em Portugal abrem-se a novas abordagens críticas, incluindo o feminismo, os estudos de género e a teoria queer. As universidades começam a reconhecer e valorizar a produção literária feminina como objeto central de investigação e ensino.</p>
+                        <p><strong>Autoras em destasque:</strong> Textos de autoras como Natália Correia (com a sua escrita irreverente e política), Maria Velho da Costa (com estilo experimental e feminista) e Hélia Correia (com obras líricas e mitopoéticas) tornam-se leitura obrigatória em cursos de literatura, estudos culturais e estudos de género.</p>
+                        <p><strong>Importância e impacto:</strong> Este movimento académico tem contribuído para a revalorização crítica de autoras até então marginalizadas, consolidando o lugar da literatura portuguesa no feminino como parte integrante da história literária nacional e internacional.</p>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event">
+                <strong>2015 → Segunda mulher portuguesa a receber o Prémio Camões</strong> Hélia Correia vence o Prémio Camões
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem é Hélia Correira?</strong> Nascida em 1949, Hélia Correia é uma escritora com vasta obra que abrange romance, poesia e teatro. O seu estilo é marcado por um forte lirismo, referências à mitologia, e uma reflexão profunda sobre o feminino e a condição humana.</p>
+                        <p><strong>Sobre o prémio Camões:</strong> Ao receber o Prémio Camões em 2015, Hélia Correia tornou-se a segunda mulher portuguesa a alcançar esta distinção, após Sophia de Mello Breyner. O prémio reconheceu não só o valor literário da sua obra, como também a sua originalidade estética e importância no contexto da literatura portuguesa.</p>
+                        <p><strong>Importância e impacto:</strong> A atribuição do Prémio Camões a Hélia Correia reforça o papel das mulheres na renovação da literatura portuguesa contemporânea e consagra a sua escrita como herdeira de uma tradição literária rica, marcada pela inovação.</p>
+                        <img src="https://camoesberlim.de/wp-content/uploads/2018/08/H%C3%A9lia-Correia-1024x747.jpg" alt="Retrato de Hélia Correia" style="max-width: 20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event">
+                <strong>2022 → Mulher vencedora do <em>Poetry International Prize</em></strong> Ana Luísa Amaral é homenageada internacionalmente pela sua obra poética- reconhecimento global do valor da literatura portuguesa escrita por mulheres
+                <div>
+                    <button class="ver-mais-btn">Ver mais</button>
+                    <div class="timeline-info">
+                        <p><strong>Quem foi Ana Luísa Amaral?</strong> Nascida em 1956, e falecida em 2022, Ana Luísa Amaral foi uma das mais destacadas poetisas contemporâneas portuguesas, também conhecida pelas suas traduções, estudos feministas e ensaios sobre literatura. A sua poesia alia profundidade filosófica, feminismo e uma linguagem acessível mas rica.</p>
+                        <p><strong>Sobre o prémio internacional:</strong> Em 2022, Ana Luísa Amaral foi homenageada com o Poetry International Prize, um dos mais prestigiados prémios literários a nível mundial. Esta distinção reconheceu a força, beleza e universalidade da sua escrita poética.</p>
+                        <p><strong>Importância e impacto:</strong> O prémio destacou não apenas a poeta, mas também a relevância da literatura portuguesa escrita por mulheres no cenário internacional. Ana Luísa Amaral tornou-se um símbolo da voz feminina contemporânea em língua portuguesa, admirada tanto pela crítica como pelo público.</p>
+                        <img src="https://www.cm-pvarzim.pt/content/uploads/2019/07/ana-luisa-amaral-pat-2.jpg" alt="Retrato de Ana Luísa Amaral" style="max-width: 20%; border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleciona todos os botões "Ver mais"
+            const buttons = document.querySelectorAll('.ver-mais-btn');
+            
+            // Adiciona evento de clique a cada botão
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Encontra o elemento irmão seguinte (o conteúdo adicional)
+                    const content = this.nextElementSibling;
+                    
+                    // Alterna a exibição do conteúdo
+                    if (content.style.display === 'none' || content.style.display === '') {
+                        content.style.display = 'block';
+                        this.textContent = 'Ver menos';
+                        this.setAttribute('aria-expanded', 'true');
+                    } else {
+                        content.style.display = 'none';
+                        this.textContent = 'Ver mais';
+                        this.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
