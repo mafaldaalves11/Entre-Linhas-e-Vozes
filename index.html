@@ -374,7 +374,7 @@
         <button class="tab-button active" onclick="openTab('home')">Home</button>
         <button class="tab-button" onclick="openTab('timeline')">Linha do Tempo</button>
         <button class="tab-button" onclick="openTab('authors')">Autoras</button>
-        <button class="tab-button" onclick="openTab('themes')">Temas e Obras</button>
+        <button class="tab-button" onclick="openTab('themes')">Temas e Luta</button>
         <button class="tab-button" onclick="window.location.href='quiz.html'">Quizes</button>
     </div>
 
@@ -449,6 +449,12 @@
                 return;
             }
 
+            // Verifica se é a aba de temas e luta para redirecionar
+            if (tabId === 'themes') {
+                window.location.href = 'temas_lutas.html';
+                return;
+            }
+            
             // Esconde todos os conteúdos
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
@@ -477,22 +483,22 @@
                 
                 // Tamanho aleatório entre 2px e 6px
                 const size = Math.random() * 4 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
+                particle.style.width = ${size}px;
+                particle.style.height = ${size}px;
                 
                 // Posição aleatória
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.left = ${Math.random() * 100}%;
+                particle.style.top = ${Math.random() * 100}%;
                 
                 // Opacidade aleatória
                 particle.style.opacity = Math.random() * 0.5 + 0.1;
                 
                 // Duração da animação aleatória
                 const duration = Math.random() * 20 + 10;
-                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDuration = ${duration}s;
                 
                 // Atraso aleatório
-                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.animationDelay = ${Math.random() * 5}s;
                 
                 container.appendChild(particle);
             }
