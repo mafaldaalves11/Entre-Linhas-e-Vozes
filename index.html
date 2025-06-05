@@ -435,7 +435,29 @@
         <p>Aqui vai a lista de temas e obras das autoras portuguesas...</p>
     </div>
 
-    <script>
+    
+
+<script>
+function openTab(tabId) {
+    // Esconde todos os conteúdos de abas
+    var tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(function(tab) {
+        tab.style.display = 'none';
+    });
+
+    // Remove a classe 'active' de todos os botões
+    var buttons = document.querySelectorAll('.tab-button');
+    buttons.forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+
+    // Mostra a aba clicada
+    document.getElementById(tabId).style.display = 'block';
+
+    // Ativa o botão atual
+    event.currentTarget.classList.add('active');
+}
+
         function openTab(tabId) {
             // Verifica se é a aba de timeline para redirecionar
             if (tabId === 'timeline') {
